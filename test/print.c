@@ -1,50 +1,55 @@
 #include "main.h"
+#include <stdio.h>
 #include <stdarg.h>
-#include <unistd.h>
 
 /**
- * _printf - Produces output according to a format
- * @format: The format parameter specifier
- *
- * Return: the number of characters printed.
- */
+  *_printf - prints all args in a format (see printf)
+  *@format: format to prnt
+  *Return: no of chars printed
+  */
 int _printf(const char *format, ...)
 {
 	va_list ap;
+	int i, ilen, ival, dval;
+	char *s;
 	const char *p;
-	char *sval;
-	int ival, i;
+	char c;
 
 	va_start(ap, format);
 	for (p = format; *p; p++)
 	{
-		if (*p != '%')
-		{
-			_putchar(*p);
-			i++;
-			continue;
-		}
+		notspec(*p);
+		i++;
+		continue;
+		
 		switch (*++p)
 		{
 			case 'd':
-				ival = va_arg(ap, int);
-				i += print(ival);
+				dval = va_arg(ap, int);
+				ilen = print(dval);
+				i += ilen;
 				break;
 			case 'i':
 				ival = va_arg(ap, int);
-				i += print(ival);
+				ilen = print(ival);
+				i += ilen;
 				break;
 			case 's':
-				sval = va_arg(ap, char *);
-				i += printstr(sval);
+				s = va_arg(ap, char *);
+				ilen = printstr(s);
+				i += ilen;
 				break;
 			case 'c':
-				_putchar((char) va_arg(ap, int));
+				c = (char) va_arg(ap, int);
+				_putchar(c);
+				i++;
+				break;
+			case '%':
+				_putchar(37);
 				i++;
 				break;
 			default:
 				_putchar(*p);
-				i++;
 				break;
 		}
 	}
@@ -52,11 +57,11 @@ int _printf(const char *format, ...)
 	return (i);
 }
 
-/**
-  *printstr- printstr
-  *@s: str
-  *Return: no of char printed
-  */
+void notspec(char c)
+{
+	if (c != '%')
+		_putchar(c);
+}
 int printstr(char *s)
 {
 	int i;
@@ -90,6 +95,7 @@ int _putchar(char c)
 int print(int n)
 {
 	int i;
+
 
 	i = 0;
 	if (n < 0)
