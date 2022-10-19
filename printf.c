@@ -43,6 +43,7 @@ int _printf(const char *format, ...)
 				i++;
 				break;
 			default:
+				--p;
 				_putchar(*p);
 				i++;
 				break;
