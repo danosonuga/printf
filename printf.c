@@ -20,15 +20,13 @@ int _printf(const char *format, ...)
 	{
 		if (*p != '%')
 		{
-			_putchar(*p);
-			i++;
+			i += _putchar(*p);
 			continue;
 		}
 		switch (*++p)
 		{
 			case 'd':
-				ival = va_arg(ap, int);
-				i += print(ival);
+				i += print(va_arg(ap, int));
 				break;
 			case 'i':
 				ival = va_arg(ap, int);
@@ -39,17 +37,14 @@ int _printf(const char *format, ...)
 				i += printstr(sval);
 				break;
 			case 'c':
-				_putchar((char) va_arg(ap, int));
-				i++;
+				i += _putchar((char) va_arg(ap, int));
 				break;
 			case '%':
-				_putchar('%');
-				i++;
+				i += _putchar('%');
 				break;
 			default:
 				--p;
-				_putchar(*p);
-				i++;
+				i += _putchar(*p);
 				break;
 		}
 	}
@@ -84,7 +79,12 @@ int printstr(char *s)
   */
 int _putchar(char c)
 {
-	return (write(1, &c, 1));
+	int i;
+
+	i = 0;
+	write(1, &c, 1);
+	i++;
+	return (i);
 }
 
 /**
