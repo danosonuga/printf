@@ -42,6 +42,10 @@ int _printf(const char *format, ...)
 				_putchar((char) va_arg(ap, int));
 				i++;
 				break;
+			case '%':
+				_putchar('%');
+				i++;
+				break;
 			default:
 				--p;
 				_putchar(*p);
